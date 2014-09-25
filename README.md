@@ -9,3 +9,4 @@ Only works on linux;
 TODO List:
 Write a better README;
 Make it work on windows;
+validate arguments;
