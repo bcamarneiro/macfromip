@@ -10,3 +10,4 @@ macfromip
 *   Write a better README;
 *   Make it work on windows;
 *   validate arguments;
+*   Check if ip is self;
