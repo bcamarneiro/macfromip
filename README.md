@@ -1,12 +1,12 @@
 macfromip
 =========
 
-Description:
+##Description
 Nodejs script;
 Gets a MAC address from a LAN IP address;
 Only works on linux;
 
-TODO List:
-Write a better README;
-Make it work on windows;
-validate arguments;
+##TODO List:
+*Write a better README;
+*Make it work on windows;
+*validate arguments;
