@@ -5,6 +5,8 @@ var macfromip = exports;
 
 var cp = require('child_process');
 
+var MACADDRESS_LENGTH = 17;
+
 macfromip.getMac = function(ipAddress, callback) {
   var ls = cp.exec('ping  ' + ipAddress + ' -c 1',
     function(error, stdout, stderr) {
@@ -14,7 +16,7 @@ macfromip.getMac = function(ipAddress, callback) {
       if (stderr !== null && stderr !== '') {
         callback('stderr: ' + stderr);
       }
-      
+
       var ls2 = cp.exec('arp -a',
         function(error2, stdout2, stderr2) {
           if (error2 !== null) {
@@ -24,7 +26,9 @@ macfromip.getMac = function(ipAddress, callback) {
             callback('stderr: ' + stderr2);
           }
 
-          stdout2 = (stdout2.substring(stdout2.indexOf(ipAddress) + 18)).substring(17, 0);
+          console.log(stdout2);
+
+          stdout2 = (stdout2.substring(stdout2.indexOf(ipAddress) + (ipAddress.length + 5))).substring(MACADDRESS_LENGTH, 0);
           callback(stdout2);
         });
     });
