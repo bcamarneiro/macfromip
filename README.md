@@ -10,3 +10,12 @@ macfromip
 *   Write a better README;
 *   validate arguments;
 *   Check if ip is self;
+
+##Usage
+```
+var macfromip = require('./macfromip.js');
+
+macfromip.getMac('192.168.2.169', function(data){
+    console.log(data);
+});
+```
