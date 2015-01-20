@@ -10,6 +10,8 @@ macfromip
 *   Write a better README;
 *   validate arguments;
 *   Check if ip is self;
+*   TEST;
+*   Create npm package;
 
 ##Usage
 ```
