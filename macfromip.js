@@ -9,7 +9,8 @@ var os = require('os');
 var MACADDRESS_LENGTH = 17;
 
 macfromip.getMacInLinux = function(ipAddress, callback){
-    var ls = cp.exec('ping  ' + ipAddress + ' -c 1',
+    // OSX requires -c switch first
+    var ls = cp.exec('ping  -c 1 ' + ipAddress,
       function(error, stdout, stderr) {
         if (error !== null) {
           callback('exec error: ' + error);
@@ -73,9 +74,15 @@ macfromip.getMac = function(ipAddress, callback) {
                 callback(mac);
             });
         break;
+        // OSX
+        case 'darwin':
+            macfromip.getMacInLinux(ipAddress, function(mac){
+                callback(mac);
+            });
+            break;
 
         default:
-            callback('Unsupported platform');
+            callback('Unsupported platform: ' + os.platform());
         break;
     }
 
