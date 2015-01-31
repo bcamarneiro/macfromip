@@ -7,11 +7,7 @@ macfromip
 *   Only works on linux, OSX and win32 platforms;
 
 ##TODO List:
-*   Write a better README;
-*   validate arguments;
-*   Check if ip is self;
-*   TEST;
-*   Create npm package;
+Complete list on [Trello](https://trello.com/c/0sNva5rq/1-write-a-better-reademe)
 
 ##Usage
 ```
