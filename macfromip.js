@@ -10,7 +10,7 @@ var MACADDRESS_LENGTH = 17;
 
 macfromip.isEmpty = function(value){
   return ((value === null) || (typeof value === 'undefined') || 0 === value.length);
-}
+};
 
 macfromip.isString = function(value){
   if(macfromip.isEmpty(value)){
@@ -22,19 +22,44 @@ macfromip.isString = function(value){
   }
 
   return false;
-}
+};
 
-macfromip.isIpAddress = function(ipaddress){  
+macfromip.isIpAddress = function(ipaddress){
   if(!macfromip.isString(ipaddress)){
     throw new Error('Expected a string');
   }
 
   /* Thanks to http://www.w3resource.com/javascript/form/ip-address-validation.php#sthash.kBJql3HS.dpuf */
-  if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress.trim())){  
-    return (true);  
+  if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress.trim())){
+    return (true);
   }
-  return (false);  
-}
+  return (false);
+};
+
+macfromip.ipIsSelf = function(ipaddress){
+    var ifaces = os.networkInterfaces();
+    var selfIps = new Array();
+
+    Object.keys(ifaces).forEach(function (ifname) {
+      var alias = 0;
+      ifaces[ifname].forEach(function (iface) {
+        if ('IPv4' !== iface.family) {
+          // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+          return;
+        }
+        selfIps.push(iface.address);
+      });
+    });
+
+    var index;
+    for (index = 0; index < selfIps.length; ++index) {
+        if(selfIps[index] === ipaddress){
+            return true;
+        }
+    }
+
+    return false;
+};
 
 macfromip.getMacInLinux = function(ipAddress, callback){
   // OSX requires -c switch first
@@ -93,6 +118,10 @@ macfromip.getMac = function(ipAddress, callback) {
 
   if(!macfromip.isIpAddress(ipAddress)) {
     throw new Error("The value you entered is not a valid IP address");
+  }
+
+  if(macfromip.ipIsSelf(ipAddress)){
+      throw new Error("The IP address cannot be self");
   }
 
   switch(os.platform()){
