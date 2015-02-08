@@ -7,7 +7,7 @@ macfromip
 *   Only works on linux, OSX and win32 platforms;
 
 ##TODO List:
-Complete list on [Trello](https://trello.com/c/0sNva5rq/1-write-a-better-reademe)
+Complete list on [Trello](https://trello.com/b/B1WM4gbZ/macfromip)
 
 ##Usage
 ```
