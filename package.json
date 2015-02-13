@@ -10,7 +10,7 @@
 		{
 			"name" : "Sean Nessworthy",
 			"email" : "sean@nessworthy.me"
-		},
+		}
 	],
 	"main": "macfromip.js",
 	"directories": {
