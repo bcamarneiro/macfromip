@@ -2,7 +2,7 @@
 	"name": "macfromip",
 	"version": "1.0.0",
 	"description": "On given an IP Address, will attempt to identify that IP's MAC address.",
-	"author": "bcamarneiro",
+	"author": "bcamarneiro <camarneirobruno@gmail.com>",
 	"contributors": [
 		{
 			"name": "Paul Cook"
