@@ -1,0 +1,24 @@
+{
+  "name": "macfromip",
+  "version": "0.0.0",
+  "description": "On given an IP Address, will attempt to identify that IP's MAC address.",
+  "main": "macfromip.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcamarneiro/macfromip.git"
+  },
+  "keywords": [
+    "MAC",
+    "IP",
+    "Address"
+  ],
+  "author": "bcamarneiro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bcamarneiro/macfromip/issues"
+  },
+  "homepage": "https://github.com/bcamarneiro/macfromip"
+}
