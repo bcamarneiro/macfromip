@@ -9,9 +9,14 @@ macfromip
 ##TODO List:
 Complete list on [Trello](https://trello.com/b/B1WM4gbZ/macfromip)
 
+##Instalation
+```
+npm install macfromip
+```
+
 ##Usage
 ```
-var macfromip = require('./macfromip.js');
+var macfromip = require('macfromip');
 
 macfromip.getMac('192.168.2.169', function(data){
     console.log(data);
