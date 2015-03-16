@@ -66,23 +66,28 @@ macfromip.getMacInLinux = function(ipAddress, callback){
   var ls = cp.exec('ping  -c 1 ' + ipAddress,
     function(error, stdout, stderr) {
       if (error !== null) {
-        callback('exec error: ' + error);
+        callback('IP address unreachable', 'exec error: ' + error);
+        return;
       }
       if (stderr !== null && stderr !== '') {
-        callback('stderr: ' + stderr);
+        callback('IP address unreachable', 'stderr: ' + stderr);
+        return;
       }
 
       var ls2 = cp.exec('arp -a',
         function(error2, stdout2, stderr2) {
           if (error2 !== null) {
-            callback('exec error: ' + error2);
+            callback('IP address unreachable', 'exec error: ' + error2);
+            return;
           }
           if (stderr2 !== null && stderr2 !== '') {
-            callback('stderr: ' + stderr2);
+            callback('IP address unreachable', 'stderr: ' + stderr2);
+            return;
           }
 
           stdout2 = (stdout2.substring(stdout2.indexOf(ipAddress) + (ipAddress.length + 5))).substring(MACADDRESS_LENGTH, 0);
-          callback(stdout2);
+          callback(false, stdout2);
+          return;
         });
     });
 };
@@ -91,25 +96,30 @@ macfromip.getMacInWin32 = function(ipAddress, callback){
     var ls = cp.exec('ping  ' + ipAddress + ' -n 1',
       function(error, stdout, stderr) {
         if (error !== null) {
-          callback('exec error: ' + error);
+          callback('IP address unreachable', 'exec error: ' + error);
+          return;
         }
         if (stderr !== null && stderr !== '') {
-          callback('stderr: ' + stderr);
+          callback('IP address unreachable', 'stderr: ' + stderr);
+          return;
         }
 
         var ls2 = cp.exec('arp -a',
           function(error2, stdout2, stderr2) {
             if (error2 !== null) {
-              callback('exec error: ' + error2);
+              callback('IP address unreachable', 'exec error: ' + error2);
+              return;
             }
             if (stderr2 !== null && stderr2 !== '') {
-              callback('stderr: ' + stderr2);
+              callback('IP address unreachable', 'stderr: ' + stderr2);
+              return;
             }
 
             var offset = 22 - ipAddress.length;
 
             stdout2 = (stdout2.substring(stdout2.indexOf(ipAddress) + (ipAddress.length + offset))).substring(MACADDRESS_LENGTH, 0);
-            callback(stdout2);
+            callback(false, stdout2);
+            return;
           });
       });
 };
@@ -126,25 +136,25 @@ macfromip.getMac = function(ipAddress, callback) {
 
   switch(os.platform()){
       case 'linux':
-          macfromip.getMacInLinux(ipAddress, function(mac){
-              callback(mac);
+          macfromip.getMacInLinux(ipAddress, function(err, mac){
+              callback(err, mac);
           });
       break;
 
       case 'win32':
-          macfromip.getMacInWin32(ipAddress, function(mac){
-              callback(mac);
+          macfromip.getMacInWin32(ipAddress, function(err, mac){
+              callback(err, mac);
           });
       break;
       // OSX
       case 'darwin':
-          macfromip.getMacInLinux(ipAddress, function(mac){
-              callback(mac);
+          macfromip.getMacInLinux(ipAddress, function(err, mac){
+              callback(err, mac);
           });
           break;
 
       default:
-          callback('Unsupported platform: ' + os.platform());
+          callback('Unsupported platform: ' + os.platform(), null);
       break;
   }
 };
