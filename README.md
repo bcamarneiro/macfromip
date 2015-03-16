@@ -1,24 +1,30 @@
 macfromip
 =========
 
-##Description
+## Synopsis
+
 *   Nodejs script;
 *   Gets a MAC address from a LAN IP address;
 *   Only works on linux, OSX and win32 platforms;
 
-##TODO List:
-Complete list on [Trello](https://trello.com/b/B1WM4gbZ/macfromip)
+## Code Example
 
-##Instalation
+```
+var macfromip = require('macfromip');
+
+macfromip.getMac('192.168.2.169', function(err, data){
+    if(err){
+    	console.log(err);
+	}
+    console.log(data);
+});
+```
+
+## Installation
+
 ```
 npm install macfromip
 ```
 
-##Usage
-```
-var macfromip = require('macfromip');
-
-macfromip.getMac('192.168.2.169', function(data){
-    console.log(data);
-});
-```
+## TODO List:
+Complete list on [Trello](https://trello.com/b/B1WM4gbZ/macfromip)
