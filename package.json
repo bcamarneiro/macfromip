@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/bcamarneiro/macfromip/issues"
   },
-  "homepage": "https://github.com/bcamarneiro/macfromip"
+  "homepage": "https://github.com/bcamarneiro/macfromip",
+  "scripts": {
+    "test": "node test/test-macfromip.js"
+  },
 }
