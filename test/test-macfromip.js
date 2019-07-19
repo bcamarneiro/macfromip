@@ -1,4 +1,4 @@
-var macfromip = require("../src/macfromip.js/index.js");
+var macfromip = require("../lib/macfromip.js");
 
 exports["isIpAddress"] = function(test) {
   test.equal(macfromip.isIpAddress("127.0.0.1"), true);
