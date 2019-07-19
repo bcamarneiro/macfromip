@@ -36,7 +36,7 @@ macfromip.isIpAddress = function(ipaddress){
   return (false);
 };
 
-macfromip.ipIsSelf = function(ipaddress){
+macfromip.getOwnMacAddress = function(ipaddress){
     var ifaces = os.networkInterfaces();
     var selfIps = new Array();
 
@@ -47,14 +47,14 @@ macfromip.ipIsSelf = function(ipaddress){
           // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
           return;
         }
-        selfIps.push(iface.address);
+        selfIps.push(iface);
       });
     });
 
     var index;
     for (index = 0; index < selfIps.length; ++index) {
-        if(selfIps[index] === ipaddress){
-            return true;
+        if(selfIps[index].address === ipaddress){
+            return selfIps[index].mac;
         }
     }
 
@@ -130,10 +130,16 @@ macfromip.getMac = function(ipAddress, callback) {
     throw new Error("The value you entered is not a valid IP address");
   }
 
-  if(macfromip.ipIsSelf(ipAddress)){
-      throw new Error("The IP address cannot be self");
-  }
+  var ownMacAddress = macfromip.getOwnMacAddress(ipAddress)
 
+  if (ownMacAddress) {
+      callback(false, ownMacAddress)
+  } else {
+      macfromip.getRemoteMac(ipAddress, callback)
+  }
+};
+
+macfromip.getRemoteMac = function(ipAddress, callback) {
   switch(os.platform()){
       case 'linux':
           macfromip.getMacInLinux(ipAddress, function(err, mac){
