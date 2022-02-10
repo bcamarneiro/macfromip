@@ -34,7 +34,7 @@ function getOwnMacAddress(ipAddress) {
 }
 
 function getMacInLinux(ipAddress, callback) {
-  cp.exec("ping -c 1 " + ipAddress, (error, stdout, stderr) => {
+  cp.execFile("ping", ["-c", "1", ipAddress], (error, stdout, stderr) => {
     if (error || stderr) {
       callback(
         "IP address unreachable",
